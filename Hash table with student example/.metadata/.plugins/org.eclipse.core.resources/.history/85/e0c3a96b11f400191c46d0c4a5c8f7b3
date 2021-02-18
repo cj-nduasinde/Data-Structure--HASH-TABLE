@@ -1,0 +1,18 @@
+import java.util.*;
+
+public class NameItem
+{
+	public int id;
+	public String name;
+	public int score;
+
+	NameItem()
+	{
+		System.out.println("Enter the key and name");
+	    this.id = Integer.parseInt(new Scanner(System.in).nextLine());
+		this.score = Integer.parseInt(new Scanner(System.in).nextLine());
+		this.name = new Scanner(System.in).nextLine();
+	}
+}
+
+

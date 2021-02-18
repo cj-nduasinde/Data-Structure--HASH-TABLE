@@ -1,0 +1,97 @@
+import java.util.*;
+
+public class HashTableClass
+{
+	public int tableSize;
+	public Node[] T = new Node[100];
+
+
+	public HashTableClass()
+	{
+		System.out.println("Give the hash table size");
+	    tableSize = Integer.parseInt(new Scanner(System.in).nextLine());
+		Node[] T = new Node[tableSize];
+		for (int i = 0; i <= tableSize - 1; i++)
+		{
+			T[i] = null;
+		}
+	}
+
+	public int hashFunction(int Key)
+	{
+
+		return Key - Key / tableSize * tableSize;
+	}
+
+	public Node Search(int Key)
+	{
+		int h = hashFunction(Key);
+		Node current = T[h];
+		while (current != null && current.item.key != Key)
+			current = current.link;
+		return current;
+	}
+
+	public void Insert(NameItem newItem)
+	{
+		int h = hashFunction(newItem.key);
+		Node current = T[h];
+		Node newNode = new Node(newItem);
+		newNode.link = T[h];
+		T[h] = newNode;
+	}
+
+	public Node searchPrevious(int Key)
+	{
+		int h = hashFunction(Key);
+		if (T[h] == null)
+			return T[h];
+		else
+		{
+			Node current = T[h];
+			while (!(current.link == null) && (current.link.item.key != Key))
+				current = current.link;
+			return current;
+		}
+	}
+
+	public void Delete(int Key)
+	{
+		int h = hashFunction(Key);
+		if (T[h] == null) // The list is empty!
+			System.out.println("There is no such item!");
+		else
+		{
+			if (T[h].item.key == Key) // The only node in the list is to be deleted.
+				T[h] = T[h].link;
+			else // The list has more than one node.
+			{
+				Node p = searchPrevious(Key);
+				if (p.link == null)
+					System.out.println("There is no such item!");
+				else
+					p.link = p.link.link;
+			}
+		}
+	}
+
+	public void PrintHashTable()
+	{
+		for (int i = 0; i <= tableSize - 1; i++)
+		{
+			if (T[i] == null)
+				System.out.println("T(" + i + "):" + "no item" + "\n");
+			else
+			{
+				Node current = T[i];
+				System.out.print("T(" + i + "):" + current.item.key + "," + current.item.name + "; ");
+				while (!(current.link == null))
+				{
+					current = current.link;
+					System.out.print(+current.item.key + "," + current.item.name + "; ");
+				}
+				System.out.println("\n");
+			}
+		}
+	}
+}
